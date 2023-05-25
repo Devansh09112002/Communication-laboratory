@@ -1,0 +1,27 @@
+-ERR-
+
+H = [1 1 0 1 1 0 0;1 0 1 1 0 1 0;0 1 1 1 0 0 1]
+
+k = 4;
+n = 7;
+p = H'
+p((5:7) , :) = [];
+I = eye(k);
+G = [I p]
+
+m = [1 0 0 1];
+code_word = mod(m*G, 2)
+
+r = [ 1 0 0 1 0 0 0]
+syn = mod(r*H', 2)
+ht = H';
+for i = 1 : 1 : n
+    if(ht(i,1:3) == syn)
+        r(i) = mod(r(i)+1, 2);
+        break;
+    end
+end
+disp("Error is in ")
+disp(i)
+disp("Corrected Code Word ")
+disp(r)
