@@ -1,0 +1,26 @@
+- QAM -
+
+M = 16;	% No of levels
+k = log2(M);	% No of bits required to represent one symbol 
+n = 3000;	% Total number of bits in sequence
+sps = 1;	% symbols per sample
+% rng default;  % seed to generate random numbers
+data = randi([0, 1], n*k, 1);	% generate random bits 0s and 1s of dimension n *
+stem(data(1:20), 'filled');
+title('Input Data');
+xlabel('Bit');
+ylabel('Binary Levels');
+
+symbols = [];
+data = data';
+for i = 1:4:n*k-3
+    symbols = [symbols , binaryVectorToDecimal(data(i:i+3),'LSBFirst')]
+end
+% symbols = bit2int(data,k);
+stem(symbols(1:40));
+title('Input Symbols');
+xlabel('Symbol');
+ylabel('Symbol Level');
+
+modulated = qammod(symbols,M,'bin'); % binary modulation 
+scatterplot(modulated,1,0,'w.');
